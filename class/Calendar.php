@@ -71,10 +71,10 @@ class Calendar {
 	
 		if(preg_match($pattern ,$date))
 		{
-			echo 'dates valid';
+			//echo 'dates valid';
 			return true;
 		} else {
-			echo 'invalid dates';
+			//echo 'invalid dates';
 			return false;
 		}
 	}
@@ -104,8 +104,25 @@ class Calendar {
 		return array(
 			'year' => $arDate[0],
 			'mounth' => $arDate[1],
-			'day' => $arDate[2],
-		)
+			'day' => $arDate[2]
+		);
 	}
 	
+	/**
+	 * function for get diff between two dates
+	 * @param $date1 - string(date format)
+	 * @param $date2 - string(date format)
+	 */
+	public function getDiff($date1,$date2) {
+		if ($this->validateDate($date1)&&$this->validateDate($date2)) {
+			echo 'validate success<br>';
+			$arFirstDate = $this->getPartDate($date1);
+			$arSecondDate = $this->getPartDate($date2);
+			var_dump($arFirstDate);
+			echo '<br>';
+			var_dump($arSecondDate);
+		} else {
+			echo 'error validation date';
+		}
+	}
 }
