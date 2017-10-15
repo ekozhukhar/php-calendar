@@ -34,7 +34,7 @@ class Calendar {
 	
 	/**
 	 * Fucntion check the uaer 
-	 * @params $year - the yar for check
+	 * @param $year - the yar for check
 	 */
 	public function checkYear($year){
 		$first_year = 1960;
@@ -51,7 +51,7 @@ class Calendar {
 	
 	/**
 	 * function 
-	 * @params $leap - bool; 
+	 * @param $leap - bool; 
 	 */
 	public function changeCalendar($leap) {
 		if ($leap) {
@@ -93,4 +93,19 @@ class Calendar {
 		}
 		return $this->invert;		
 	}
+	
+	/**
+	 * function for get Year from date
+	 * @param $date - string, date format('YYYY-mm-dd')
+	 * @param $type - string('year','mounth','day')
+	 */
+	public function getPartDate($date) {
+		$arDate = explode('-', $date);
+		return array(
+			'year' => $arDate[0],
+			'mounth' => $arDate[1],
+			'day' => $arDate[2],
+		)
+	}
+	
 }
