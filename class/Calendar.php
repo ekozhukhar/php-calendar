@@ -57,7 +57,7 @@ class Calendar {
 		if ($leap) {
 			$this->calendar[2] = 29;
 		} elseif($this->calendar[2]!=28) {
-			$this->calendar = 28;
+			$this->calendar[2] = 28;
 		}
 		return $this->calendar;
 	}
@@ -90,6 +90,8 @@ class Calendar {
 		}
 		if($date1 > $date2) {
 			$this->invert = true;
+		} else {
+			$this->invert = false;
 		}
 		return $this->invert;		
 	}
@@ -102,9 +104,9 @@ class Calendar {
 	public function getPartDate($date) {
 		$arDate = explode('-', $date);
 		return array(
-			'year' => $arDate[0],
-			'mounth' => $arDate[1],
-			'day' => $arDate[2]
+			'year' => intval($arDate[0]),
+			'mounth' => intval($arDate[1]),
+			'day' => intval($arDate[2])
 		);
 	}
 	
@@ -121,6 +123,50 @@ class Calendar {
 			var_dump($arFirstDate);
 			echo '<br>';
 			var_dump($arSecondDate);
+			$this->compareDates($date1,$date2);
+			if(!$this->invert) {
+				$leap = $this->checkYear($arFirstDate['year']);
+				$this->initCalendar();
+				$this->changeCalendar($leap);
+				$days = -1;
+				$mounth = 0;
+				echo '<br>';
+				if ($arFirstDate['year']<$arSecondDate['year']) {
+					echo 'first algoritm';
+				} elseif($arFirstDate['mounth']<$arSecondDate['mounth']) {
+					//echo $arFirstDate['mounth'];die();
+					//var_dump($this->calendar);die();
+					$first_mounth = $arFirstDate['mounth'];
+					while($arFirstDate['mounth']<=$arSecondDate['mounth']) {
+						//$mounth++;
+						while($arFirstDate['day']<=$this->calendar[$arFirstDate['mounth']]) {
+							if ($arFirstDate['day']==$arSecondDate['day']&&$arFirstDate['mounth']!=$first_mounth) {
+								$mounth++;
+								//echo $arFirstDate['day'];
+							}
+							$arFirstDate['day'] = $arFirstDate['day']+1;
+							$days++;
+						}
+						$arFirstDate['mounth'] = $arFirstDate['mounth']+1;
+						$arFirstDate['day'] = 1;
+					}
+					echo '<br>';
+					echo 'mounth between 2 dates is: '.$mounth;
+					echo '<br>';
+					echo 'days between 2 dates is: '.$days;
+					
+				} else {
+					
+					while($arFirstDate['day']<=$arSecondDate['day']) {
+						$days++;
+						$arFirstDate['day'] = $arFirstDate['day']+1;
+					}
+					echo '<br>';
+					echo 'days between 2 dates is: '.$days;
+				}
+			} else {
+				echo 'second date value at least not less';
+			}
 		} else {
 			echo 'error validation date';
 		}

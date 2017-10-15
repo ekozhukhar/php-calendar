@@ -3,8 +3,9 @@ require_once('class/Calendar.php');
 
 $dateClass = new Calendar();
 echo 'Start project calendar<br>';
-
-$dateClass->getDiff('2015-09-30', '2015-08-31');
+//if ($dateClass->checkYear(2015)) {echo 'leap';} else {echo 'not leap';};
+//die();
+$dateClass->getDiff('2015-01-15', '2015-08-28');
 /*if ($dataClass->checkYear(2001)) {
 	echo 'THE HIGHT YEAR';
 } else {
